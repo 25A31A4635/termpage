@@ -44,6 +44,7 @@ if (target === 'backup') {
     'index.html',
     'style.css',
     'README.md',
+    'LICENSE',
     'icon',
     'focus',
     'script',
