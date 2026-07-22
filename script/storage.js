@@ -4,26 +4,33 @@
 
 // Default bookmark grid structure displayed on first load (upfront links)
 const DEFAULT_BOOKMARKS = [
-  { href: "https://stuffifound.pages.dev/", title: "StuffIFound" },
-  { href: "https://huggingface.co/spaces", title: "HuggingFace" },
+  // Column 1: Core Essentials
   { href: "https://youtube.com", title: "YouTube" },
-  { href: "https://drive.google.com/", title: "Drive" },
+  { href: "https://reddit.com", title: "Reddit" },
+  { href: "https://x.com", title: "Twitter" },
+  { href: "https://github.com", title: "GitHub" },
+  { href: "https://mail.google.com", title: "Gmail" },
+
+  // Column 2: Social & Messaging
+  { href: "https://web.whatsapp.com", title: "WhatsApp" },
+  { href: "https://instagram.com", title: "Instagram" },
+  { href: "https://pinterest.com", title: "Pinterest" },
   { href: "https://discord.com/app", title: "Discord" },
-  { href: "https://deepsite.hf.co/", title: "Deepsite" },
-  { href: "https://web.whatsapp.com/", title: "WhatsApp" },
-  { href: "https://www.reddit.com/", title: "Reddit" },
-  { href: "https://stuffifound.pages.dev/", title: "StuffIFound" },
-  { href: "https://pinterest.com/", title: "Pinterest" },
-  { href: "https://chat.deepseek.com/", title: "DeepSeek" },
-  { href: "https://grok.com/", title: "Grock" },
-  { href: "https://stuffifound.pages.dev/", title: "StuffIFound" },
-  { href: "https://alternativeto.net/", title: "AlternativeTo" },
-  { href: "https://stuffifound.pages.dev/", title: "StuffIFound" },
+  { href: "https://twitch.tv", title: "Twitch" },
+
+  // Column 3: Tools & Media
+  { href: "https://drive.google.com", title: "Drive" },
+  { href: "https://wikipedia.org", title: "Wikipedia" },
+  { href: "https://amazon.com", title: "Amazon" },
+  { href: "https://netflix.com", title: "Netflix" },
+  { href: "https://open.spotify.com", title: "Spotify" },
+
+  // Column 4: AI Assistants & Apps
+  { href: "https://chatgpt.com", title: "ChatGPT" },
+  { href: "https://claude.ai/new", title: "Claude" },
   { href: "https://gemini.google.com/app", title: "Gemini" },
-  { href: "https://www.instagram.com/", title: "Instagram" },
-  { href: "https://stuffifound.pages.dev/", title: "StuffIFound" },
-  { href: "https://fmhy.net/", title: "FMHY" },
-  { href: "https://claude.ai/new", title: "Claude" }
+  { href: "https://chat.deepseek.com", title: "DeepSeek" },
+  { href: "https://huggingface.co/spaces", title: "HuggingFace" }
 ];
 
 // Default general configuration values
@@ -35,8 +42,16 @@ const DEFAULT_TIMEZONE = Intl.DateTimeFormat().resolvedOptions().timeZone || "UT
 const DEFAULT_SEARCH_ENGINE = "google"; // "google" | "ddg" | "bing"
 const DEFAULT_TERMINAL_PLACEHOLDER = "search anything...";
 
-// Default shelf bookmarks (starts empty)
-const DEFAULT_SHELF_BOOKMARKS = [];
+// Default shelf bookmarks (hidden, surface on filter match)
+const DEFAULT_SHELF_BOOKMARKS = [
+  { href: "https://stackoverflow.com", title: "StackOverflow" },
+  { href: "https://notion.so", title: "Notion" },
+  { href: "https://figma.com", title: "Figma" },
+  { href: "https://linkedin.com", title: "LinkedIn" },
+  { href: "https://dev.to", title: "DevTo" },
+  { href: "https://alternativeto.net", title: "AlternativeTo" },
+  { href: "https://fmhy.net", title: "FMHY" }
+];
 
 // ============================================================================
 // Syntax Highlighting Colors (Customizable, independent of layouts themes)
