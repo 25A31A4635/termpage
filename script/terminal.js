@@ -115,7 +115,15 @@ function updateSyntaxHighlight(rawValue) {
       input.setAttribute('data-suggestion', full);
       const remaining = full.substring(value.length);
       // Overlay ghost autocomplete text behind text cursor
-      hintEl.innerHTML = `<span style="visibility:hidden">${escapeHTML(rawValue)}</span><span class="suggestion">${escapeHTML(remaining)}</span>`;
+      hintEl.replaceChildren();
+      const hiddenSpan = document.createElement('span');
+      hiddenSpan.style.visibility = 'hidden';
+      hiddenSpan.textContent = rawValue;
+      const suggSpan = document.createElement('span');
+      suggSpan.className = 'suggestion';
+      suggSpan.textContent = remaining;
+      hintEl.appendChild(hiddenSpan);
+      hintEl.appendChild(suggSpan);
 
       // Set corresponding syntax colors on the input text box
       if (value.startsWith(':')) {
@@ -140,7 +148,15 @@ function updateSyntaxHighlight(rawValue) {
   const rawPrefixMatch = rawValue.match(/^([^:\s]+:)(.+)$/);
   if (rawPrefixMatch && knownSearchDynamic.test(value)) {
     const [, rawPrefix, rawRest] = rawPrefixMatch;
-    hintEl.innerHTML = `<span class="search">${escapeHTML(rawPrefix)}</span><span style="visibility:hidden">${escapeHTML(rawRest)}</span>`;
+    hintEl.replaceChildren();
+    const searchSpan = document.createElement('span');
+    searchSpan.className = 'search';
+    searchSpan.textContent = rawPrefix;
+    const hiddenRestSpan = document.createElement('span');
+    hiddenRestSpan.style.visibility = 'hidden';
+    hiddenRestSpan.textContent = rawRest;
+    hintEl.appendChild(searchSpan);
+    hintEl.appendChild(hiddenRestSpan);
     input.className = '';
     return;
   }

@@ -139,7 +139,7 @@ function _renderCustomizeModal() {
 
   // ---- Syntax color rows ----
   const grid = document.getElementById('customize-color-grid');
-  grid.innerHTML = '';
+  grid.replaceChildren();
 
   SYNTAX_COLOR_DEFS.forEach(({ key, label, example }) => {
     const color = colors[key] || DEFAULT_SYNTAX_COLORS[key];
@@ -148,19 +148,46 @@ function _renderCustomizeModal() {
     row.className = 'customize-row';
     row.dataset.key = key;
 
-    row.innerHTML = `
-      <span class="customize-label">${label}</span>
-      <span class="customize-preview" style="color:${color}">${example}</span>
-      <div class="customize-color-wrap">
-        <input type="color" class="customize-swatch" value="${color}" data-key="${key}" title="Pick color">
-        <input type="text" class="customize-hex" value="${color.toUpperCase()}" data-key="${key}" maxlength="7" spellcheck="false">
-      </div>
-      <button class="customize-reset-btn" data-key="${key}" title="Reset">↺</button>
-    `;
+    const labelSpan = document.createElement('span');
+    labelSpan.className = 'customize-label';
+    labelSpan.textContent = label;
 
-    const swatch = row.querySelector('.customize-swatch');
-    const hex    = row.querySelector('.customize-hex');
-    const preview = row.querySelector('.customize-preview');
+    const preview = document.createElement('span');
+    preview.className = 'customize-preview';
+    preview.style.color = color;
+    preview.textContent = example;
+
+    const wrapDiv = document.createElement('div');
+    wrapDiv.className = 'customize-color-wrap';
+
+    const swatch = document.createElement('input');
+    swatch.type = 'color';
+    swatch.className = 'customize-swatch';
+    swatch.value = color;
+    swatch.dataset.key = key;
+    swatch.title = 'Pick color';
+
+    const hex = document.createElement('input');
+    hex.type = 'text';
+    hex.className = 'customize-hex';
+    hex.value = color.toUpperCase();
+    hex.dataset.key = key;
+    hex.maxLength = 7;
+    hex.spellCheck = false;
+
+    wrapDiv.appendChild(swatch);
+    wrapDiv.appendChild(hex);
+
+    const resetBtn = document.createElement('button');
+    resetBtn.className = 'customize-reset-btn';
+    resetBtn.dataset.key = key;
+    resetBtn.title = 'Reset';
+    resetBtn.textContent = '↺';
+
+    row.appendChild(labelSpan);
+    row.appendChild(preview);
+    row.appendChild(wrapDiv);
+    row.appendChild(resetBtn);
 
     swatch.addEventListener('input', () => {
       const v = swatch.value;
@@ -207,7 +234,7 @@ function _renderCustomizeModal() {
 
   // ---- Theme buttons ----
   const themeGrid = document.getElementById('customize-theme-grid');
-  themeGrid.innerHTML = '';
+  themeGrid.replaceChildren();
 
   THEME_DEFS.forEach(({ value, label }) => {
     const btn = document.createElement('button');

@@ -84,22 +84,52 @@ document.addEventListener('DOMContentLoaded', () => {
 function _buildCard() {
   _tourCard = document.createElement('div');
   _tourCard.id = 'tour-card';
-  _tourCard.innerHTML = `
-    <p class="tour-tip" id="tour-tip"></p>
-    <div class="tour-foot">
-      <button class="tour-skip" id="tour-skip">Skip tour</button>
-      <div class="tour-nav">
-        <button class="tour-arrow" id="tour-prev" title="Back">←</button>
-        <span class="tour-counter" id="tour-counter"></span>
-        <button class="tour-arrow tour-arrow-next" id="tour-next" title="Next">→</button>
-      </div>
-    </div>
-  `;
+
+  const tipP = document.createElement('p');
+  tipP.className = 'tour-tip';
+  tipP.id = 'tour-tip';
+
+  const footDiv = document.createElement('div');
+  footDiv.className = 'tour-foot';
+
+  const skipBtn = document.createElement('button');
+  skipBtn.className = 'tour-skip';
+  skipBtn.id = 'tour-skip';
+  skipBtn.textContent = 'Skip tour';
+
+  const navDiv = document.createElement('div');
+  navDiv.className = 'tour-nav';
+
+  const prevBtn = document.createElement('button');
+  prevBtn.className = 'tour-arrow';
+  prevBtn.id = 'tour-prev';
+  prevBtn.title = 'Back';
+  prevBtn.textContent = '←';
+
+  const counterSpan = document.createElement('span');
+  counterSpan.className = 'tour-counter';
+  counterSpan.id = 'tour-counter';
+
+  const nextBtn = document.createElement('button');
+  nextBtn.className = 'tour-arrow tour-arrow-next';
+  nextBtn.id = 'tour-next';
+  nextBtn.title = 'Next';
+  nextBtn.textContent = '→';
+
+  navDiv.appendChild(prevBtn);
+  navDiv.appendChild(counterSpan);
+  navDiv.appendChild(nextBtn);
+
+  footDiv.appendChild(skipBtn);
+  footDiv.appendChild(navDiv);
+
+  _tourCard.appendChild(tipP);
+  _tourCard.appendChild(footDiv);
   document.body.appendChild(_tourCard);
 
-  document.getElementById('tour-skip').addEventListener('click', closeTour);
-  document.getElementById('tour-prev').addEventListener('click', _prev);
-  document.getElementById('tour-next').addEventListener('click', _next);
+  skipBtn.addEventListener('click', closeTour);
+  prevBtn.addEventListener('click', _prev);
+  nextBtn.addEventListener('click', _next);
 
   _keydown = (e) => {
     if (!_tourActive) return;

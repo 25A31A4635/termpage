@@ -319,11 +319,14 @@ function closeHistoryModal() {
 function _renderHistoryModal() {
   const h = loadHistory();
   const list = document.getElementById('history-list');
-  list.innerHTML = '';
+  list.replaceChildren();
 
   // Show placeholders if history is empty
   if (!h.length) {
-    list.innerHTML = '<div class="history-empty">No history yet.</div>';
+    const emptyDiv = document.createElement('div');
+    emptyDiv.className = 'history-empty';
+    emptyDiv.textContent = 'No history yet.';
+    list.appendChild(emptyDiv);
     return;
   }
 
@@ -333,9 +336,17 @@ function _renderHistoryModal() {
     el.className = 'history-entry';
     el.tabIndex = 0;
     el.dataset.entry = entry;
-    el.innerHTML =
-      `<span class="history-index">${i + 1}</span>` +
-      `<span class="history-text">${escapeHTML(entry)}</span>`;
+
+    const idxSpan = document.createElement('span');
+    idxSpan.className = 'history-index';
+    idxSpan.textContent = String(i + 1);
+
+    const textSpan = document.createElement('span');
+    textSpan.className = 'history-text';
+    textSpan.textContent = entry;
+
+    el.appendChild(idxSpan);
+    el.appendChild(textSpan);
 
     // Click/Enter action handler
     el.addEventListener('click', () => _fillFromHistory(entry));

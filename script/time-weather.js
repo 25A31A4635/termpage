@@ -51,19 +51,25 @@ async function updateWeather() {
   const cacheKey = `weather_${location}_${unit}`;
   const cached = localStorage.getItem(cacheKey);
   
+  function _setWeatherSpan(text) {
+    const span = document.createElement('span');
+    span.textContent = text;
+    weatherDisplay.replaceChildren(span);
+  }
+
   // Verify if cache data is active and valid (less than 30 minutes old)
   if (cached) {
     try {
       const data = JSON.parse(cached);
       if (Date.now() - data.timestamp < WEATHER_CACHE_TTL) {
-        weatherDisplay.innerHTML = `<span>${data.name} ${data.temp}°${unit === 'fahrenheit' ? 'F' : 'C'}</span>`;
+        _setWeatherSpan(`${data.name} ${data.temp}°${unit === 'fahrenheit' ? 'F' : 'C'}`);
         return;
       }
     } catch (e) { /* ignore cache parse error */ }
   }
 
   // Display status indicator
-  weatherDisplay.innerHTML = `<span>Loading...</span>`;
+  _setWeatherSpan('Loading...');
 
   try {
     // 1) Translate city name into geographic coordinates using Open-Meteo Geocoding
@@ -90,15 +96,15 @@ async function updateWeather() {
       }));
 
       // Render weather details
-      weatherDisplay.innerHTML = `<span>${name} ${temp}°${unit === 'fahrenheit' ? 'F' : 'C'}</span>`;
+      _setWeatherSpan(`${name} ${temp}°${unit === 'fahrenheit' ? 'F' : 'C'}`);
     } else {
       // Fallback display city name directly if geo lookup returns empty
-      weatherDisplay.innerHTML = `<span>${location}</span>`;
+      _setWeatherSpan(location);
     }
   } catch (error) {
     // Graceful error recovery: fallback to displaying raw city name
     console.error('Weather fetch error:', error);
-    weatherDisplay.innerHTML = `<span>${location}</span>`;
+    _setWeatherSpan(location);
   }
 }
 

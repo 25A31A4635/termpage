@@ -20,7 +20,7 @@ function _renderTagsModal() {
 function _renderOverrides() {
   const overrides = getStoredSearchOverrides();
   const grid = document.getElementById('tags-overrides-grid');
-  grid.innerHTML = '';
+  grid.replaceChildren();
 
   Object.entries(OVERRIDEABLE_PREFIXES).forEach(([key, { label, default: def }]) => {
     const row = document.createElement('div');
@@ -60,7 +60,7 @@ function _renderOverrides() {
 function _renderCustomTags() {
   const tags = getStoredCustomTags();
   const list = document.getElementById('tags-custom-list');
-  list.innerHTML = '';
+  list.replaceChildren();
   tags.forEach((tag, i) => _renderCustomTagRow(list, tag, i));
 }
 

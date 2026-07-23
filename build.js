@@ -57,11 +57,12 @@ if (target === 'backup') {
   fs.mkdirSync(releaseDir, { recursive: true });
 
   // Helper: recursively add a file or directory to a zip
-  function addToZip(zip, fsPath, zipPath) {
+  function addToZip(zip, fsPath, zipPath, targetBrowser) {
     const stat = fs.statSync(fsPath);
     if (stat.isDirectory()) {
       for (const entry of fs.readdirSync(fsPath)) {
-        addToZip(zip, path.join(fsPath, entry), zipPath + '/' + entry);
+        if (targetBrowser !== 'opera' && entry === 'background-opera.js') continue;
+        addToZip(zip, path.join(fsPath, entry), zipPath + '/' + entry, targetBrowser);
       }
     } else {
       zip.addFile(zipPath, fs.readFileSync(fsPath));
@@ -74,7 +75,7 @@ if (target === 'backup') {
     // Add shared files
     for (const item of INCLUDE) {
       const fsPath = path.join(__dirname, item);
-      if (fs.existsSync(fsPath)) addToZip(zip, fsPath, item);
+      if (fs.existsSync(fsPath)) addToZip(zip, fsPath, item, browser);
     }
 
     // Add browser-specific manifest.json

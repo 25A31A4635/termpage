@@ -85,7 +85,7 @@ function _renderShelfEditor(bookmarks) {
     grid.parentNode.insertBefore(shelfEditor, grid);
   }
   shelfEditor.classList.remove('hidden');
-  shelfEditor.innerHTML = '';
+  shelfEditor.replaceChildren();
 
   // + Add button at top
   const addBtn = document.createElement('button');
@@ -159,7 +159,7 @@ function renderGridEditor(bookmarks) {
   const shelfEditor = document.getElementById('shelf-list-editor');
   grid.classList.remove('hidden');
   if (shelfEditor) shelfEditor.classList.add('hidden');
-  grid.innerHTML = '';
+  grid.replaceChildren();
 
   const columns = 4;
   const rows = Math.max(5, Math.ceil(bookmarks.length / columns));

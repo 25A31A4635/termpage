@@ -143,8 +143,21 @@ function _buildBookmarkLi(bookmark) {
   try { domain = new URL(bookmark.href).hostname; } catch {}
   const sources = _buildSources(domain);
   const li = document.createElement('li');
-  li.innerHTML = `<a href="${bookmark.href}" class="bookmark-link"><img alt="${bookmark.title}" class="bookmark-icon"><span>${bookmark.title}</span></a>`;
-  const img = li.querySelector('img');
+  const a = document.createElement('a');
+  a.href = bookmark.href;
+  a.className = 'bookmark-link';
+
+  const img = document.createElement('img');
+  img.alt = bookmark.title;
+  img.className = 'bookmark-icon';
+
+  const span = document.createElement('span');
+  span.textContent = bookmark.title;
+
+  a.appendChild(img);
+  a.appendChild(span);
+  li.appendChild(a);
+
   _loadFavicon(img, domain, sources);
   return li;
 }
@@ -174,7 +187,7 @@ function getLastBookmarkMatch() {
 
 function generateBookmarks() {
   const container = document.getElementById('bookmarks');
-  container.innerHTML = '';
+  container.replaceChildren();
   _upfrontSlots = [];
 
   const bookmarks = getStoredBookmarks();
